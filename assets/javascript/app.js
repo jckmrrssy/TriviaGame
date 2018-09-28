@@ -63,50 +63,57 @@ $(document).ready(function() {
 
    // Function to start the loop through the questions 
     let questionRunner = function () {
-        // Loop through each object in the questionArray
-        for (i=0; i < questionArray.length; i++) {
-            let displayedQuestion = questionArray[questionCounter].question;
-            // Display current question in question div 
-            $("#questionHead").text(displayedQuestion);
-            // Get answer array length from each object
-            let displayedAnswers = questionArray[questionCounter].answers.length;
-                // Append choices to DOM, add classes for click listeners & values to check if correct later
-                for (i=0; i < displayedAnswers; i++ ) {
-                    var answer = questionArray[questionCounter].answers[i];
-                    var list = $("<button>" + answer + "</button>");
-                    list.addClass('theChoices');
-                    list.attr("value", i);
-                    $("#choices").append(list);
-                };
+        let displayedQuestion = questionArray[questionCounter].question;
+        // Display current question in question div 
+        $("#questionHead").text(displayedQuestion);
+        // Get answer array length from each object
+        let displayedAnswers = questionArray[questionCounter].answers.length;
+            // Append choices to DOM, add classes for click listeners & values to check if correct later
+            for (i=0; i < displayedAnswers; i++ ) {
+                var answer = questionArray[questionCounter].answers[i];
+                var list = $("<button>" + answer + "</button>");
+                list.addClass('theChoices');
+                list.attr("value", i);
+                $("#choices").append(list);
+            };
                    
-    }};
+    };
 
+    // Function for if you run out of time 
+    var outtaTime = function () {
+        $("#choices").empty();
+        $("#questionHead").hide();
+        $("#timer").hide();
+        
+    }
+    // Function for if you click and get it right
+        // should these be in one function with a conditional?
+    // Function for if yuou click and get it wrong 
 
+    var time = 30;
 
+    var start = function () {
+        time = 30;
+        $("#timer").text("Time remaining: " + time);
+        intervalId = setInterval(countdown, 1000);
+    };
+    
+    var countdown = function () {
+        time--;
+        $("#timer").text("Time remaining: " + time);
+        if (time === 0) {
+            stop();
+            questionCounter++;
+            outtaTime();
+        }
+    };
+    
+    var stop = function () {
+        clearInterval(intervalId);
+    };
 
 
    
 });
 
-var time = 30;
 
-var start = function () {
-    time = 30;
-    $("#timer").text("Time remaining: " + time);
-    intervalId = setInterval(countdown, 1000);
-};
-
-var countdown = function () {
-    time--;
-    $("#timer").text("Time remaining: " + time);
-    if (time === 0) {
-        stop();
-
-        questionCounter++;
-        document.questionRunner();
-    }
-};
-
-var stop = function () {
-    clearInterval(intervalId);
-};
