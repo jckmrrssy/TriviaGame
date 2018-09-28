@@ -38,7 +38,7 @@ var questionCounter = 0;
 var numberCorrect = 0;
 // Declaring interval variable to use with setInterval later & starting clock running as false 
 var interval;
-var correctAnswer = questionArray[questionCounter].correct;
+
 
 // Functions and such 
 $(document).ready(function() {
@@ -72,10 +72,32 @@ $(document).ready(function() {
             for (i=0; i < displayedAnswers; i++ ) {
                 var answer = questionArray[questionCounter].answers[i];
                 var list = $("<button>" + answer + "</button>");
-                list.addClass("thisOne");
+                list.addClass("this-one");
                 list.attr("value", i);
                 $("#choices").append(list);
             };
+            // Click listner for the appended buttons above
+            $(".this-one").on("click", function() {
+                stop ();
+                var value = ($(this).attr("value"));
+                console.log(value);
+                // Conditional for if you are correct
+                if (value == questionArray[questionCounter].correct) {
+                    $("#choices").empty();
+                    $("#timer").hide();
+                    $("#questionHead").text("Good job, you're right!");
+                    setTimeout(questionRunner, 6000);
+                }
+                // Conditional for if you are incorrect 
+                else {
+                    $("#choices").empty();
+                    $("#timer").hide();
+                    $("#questionHead").text("Too bad, that was wrong!")
+                    setTimeout(questionRunner, 6000); 
+                };
+                questionCounter++;
+                console.log(questionCounter);
+            });    
                    
     };
 
@@ -87,27 +109,8 @@ $(document).ready(function() {
         setTimeout(questionRunner, 8000);
         
     }
-    // Click listener - not sure why this isn't working....
-    $(".thisOne").on("click", function() {
-        console.log("I was clicked");
-        stop ();
-        var value = ($(this).attr("value"));
-        questionCounter++;
-        // Conditional for if you are correct
-        if (value == correctAnswer) {
-            $("#choices").empty();
-            $("#timer").hide();
-            $("#questionHead").text("Good job, you're right!");
-            setTimeout(questionRunner, 8000);
-        }
-        // Conditional for if you are incorrect 
-        else {
-            $("#choices").empty();
-            $("#timer").hide();
-            $("#questionHead").text("Too bad, that was wrong!")
-            setTimeout(questionRunner, 8000); 
-        };
-    });
+
+    
         
     
     // Delcaring time variable, starting at 30 seconds 
