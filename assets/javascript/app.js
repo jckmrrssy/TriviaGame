@@ -1,6 +1,5 @@
 
  
-
 // Question objects
 let question1 = {
     question: "When did the vikings play their first season in the NFL?",
@@ -55,7 +54,6 @@ $(document).ready(function() {
         $("#questionHead").show();
         shown = 'questions';
         questionRunner();
-        start();
         };
     });
 
@@ -66,6 +64,8 @@ $(document).ready(function() {
         let displayedQuestion = questionArray[questionCounter].question;
         // Display current question in question div 
         $("#questionHead").text(displayedQuestion);
+        $("#timer").show();
+        start();
         // Get answer array length from each object
         let displayedAnswers = questionArray[questionCounter].answers.length;
             // Append choices to DOM, add classes for click listeners & values to check if correct later
@@ -82,8 +82,9 @@ $(document).ready(function() {
     // Function for if you run out of time 
     var outtaTime = function () {
         $("#choices").empty();
-        $("#questionHead").hide();
+        $("#questionHead").text("You took too long!")
         $("#timer").hide();
+        setTimeout(questionRunner, 5000);
         
     }
     // Function for if you click and get it right
