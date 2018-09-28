@@ -38,7 +38,7 @@ var questionCounter = 0;
 var numberCorrect = 0;
 // Declaring interval variable to use with setInterval later & starting clock running as false 
 var interval;
-
+var correctAnswer = questionArray[questionCounter].correct;
 
 // Functions and such 
 $(document).ready(function() {
@@ -72,7 +72,7 @@ $(document).ready(function() {
             for (i=0; i < displayedAnswers; i++ ) {
                 var answer = questionArray[questionCounter].answers[i];
                 var list = $("<button>" + answer + "</button>");
-                list.addClass('theChoices');
+                list.addClass("thisOne");
                 list.attr("value", i);
                 $("#choices").append(list);
             };
@@ -84,21 +84,41 @@ $(document).ready(function() {
         $("#choices").empty();
         $("#questionHead").text("You took too long!")
         $("#timer").hide();
-        setTimeout(questionRunner, 5000);
+        setTimeout(questionRunner, 8000);
         
     }
-    // Function for if you click and get it right
-        // should these be in one function with a conditional?
-    // Function for if yuou click and get it wrong 
-
+    // Click listener - not sure why this isn't working....
+    $(".thisOne").on("click", function() {
+        console.log("I was clicked");
+        stop ();
+        var value = ($(this).attr("value"));
+        questionCounter++;
+        // Conditional for if you are correct
+        if (value == correctAnswer) {
+            $("#choices").empty();
+            $("#timer").hide();
+            $("#questionHead").text("Good job, you're right!");
+            setTimeout(questionRunner, 8000);
+        }
+        // Conditional for if you are incorrect 
+        else {
+            $("#choices").empty();
+            $("#timer").hide();
+            $("#questionHead").text("Too bad, that was wrong!")
+            setTimeout(questionRunner, 8000); 
+        };
+    });
+        
+    
+    // Delcaring time variable, starting at 30 seconds 
     var time = 30;
-
+    // Timer start function
     var start = function () {
         time = 30;
         $("#timer").text("Time remaining: " + time);
         intervalId = setInterval(countdown, 1000);
     };
-    
+    // Timer countdown function
     var countdown = function () {
         time--;
         $("#timer").text("Time remaining: " + time);
@@ -108,7 +128,7 @@ $(document).ready(function() {
             outtaTime();
         }
     };
-    
+    // Timer stop function
     var stop = function () {
         clearInterval(intervalId);
     };
