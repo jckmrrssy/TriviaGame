@@ -61,6 +61,8 @@ $(document).ready(function() {
 
    // Function to start the loop through the questions 
     let questionRunner = function () {
+        // If we still have questions to go this will run, otherwise the else statement will display summary scren instead
+        if (questionCounter < questionArray.length) {
         let displayedQuestion = questionArray[questionCounter].question;
         // Display current question in question div 
         $("#questionHead").text(displayedQuestion);
@@ -80,25 +82,29 @@ $(document).ready(function() {
             $(".this-one").on("click", function() {
                 stop ();
                 var value = ($(this).attr("value"));
-                console.log(value);
                 // Conditional for if you are correct
                 if (value == questionArray[questionCounter].correct) {
                     $("#choices").empty();
                     $("#timer").hide();
                     $("#questionHead").text("Good job, you're right!");
-                    setTimeout(questionRunner, 6000);
+                    numberCorrect++;
+                    setTimeout(questionRunner, 5000);
                 }
                 // Conditional for if you are incorrect 
                 else {
                     $("#choices").empty();
                     $("#timer").hide();
                     $("#questionHead").text("Too bad, that was wrong!")
-                    setTimeout(questionRunner, 6000); 
+                    setTimeout(questionRunner, 5000); 
                 };
                 questionCounter++;
-                console.log(questionCounter);
             });    
-                   
+        } 
+        else {
+            $("#choices").empty();
+            $("#timer").hide();
+            $("#questionHead").text("You got " + numberCorrect +"/5 right!")
+        }          
     };
 
     // Function for if you run out of time 
