@@ -104,6 +104,14 @@ $(document).ready(function() {
             $("#choices").empty();
             $("#timer").hide();
             $("#questionHead").text("You got " + numberCorrect +"/5 right!")
+            var restartButton = $("<button>" + "Restart" + "</button>");
+            restartButton.addClass("uniqueRestart")
+            $("#choices").append(restartButton);
+            $("#uniqueRestart").on("click", function () {
+                numberCorrect = 0;
+                questionCounter = 0;
+                questionRunner();
+            })
         }          
     };
 
@@ -112,7 +120,7 @@ $(document).ready(function() {
         $("#choices").empty();
         $("#questionHead").text("You took too long!")
         $("#timer").hide();
-        setTimeout(questionRunner, 8000);
+        setTimeout(questionRunner, 5000);
         
     }
 
