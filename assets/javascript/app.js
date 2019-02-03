@@ -40,7 +40,7 @@ var numberCorrect = 0;
 var interval;
 
 
-// Functions and such 
+// Functions 
 $(document).ready(function() {
     var shown = "start"; 
     $("#timer").hide();
@@ -100,6 +100,7 @@ $(document).ready(function() {
                 questionCounter++;
             });    
         } 
+        // Condition for results screen, not sure why restart button not working yet
         else {
             $("#choices").empty();
             $("#timer").hide();
@@ -107,7 +108,7 @@ $(document).ready(function() {
             var restartButton = $("<button>" + "Restart" + "</button>");
             restartButton.addClass("uniqueRestart")
             $("#choices").append(restartButton);
-            $("#uniqueRestart").on("click", function () {
+            $(".uniqueRestart").on("click", function () {
                 numberCorrect = 0;
                 questionCounter = 0;
                 questionRunner();
