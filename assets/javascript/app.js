@@ -88,14 +88,14 @@ $(document).ready(function() {
                     $("#timer").hide();
                     $("#questionHead").text("Good job, you're right!");
                     numberCorrect++;
-                    setTimeout(questionRunner, 5000);
+                    setTimeout(questionRunner, 3000);
                 }
                 // Conditional for if you are incorrect 
                 else {
                     $("#choices").empty();
                     $("#timer").hide();
                     $("#questionHead").text("Too bad, that was wrong!")
-                    setTimeout(questionRunner, 5000); 
+                    setTimeout(questionRunner, 3000); 
                 };
                 questionCounter++;
             });    
